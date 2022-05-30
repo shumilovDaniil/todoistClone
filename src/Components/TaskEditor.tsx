@@ -1,5 +1,6 @@
 import React, {FC, useState} from 'react';
 import {ITask} from "../types/types";
+import {useLocation} from "react-router-dom";
 
 export interface ITaskEditor {
     handleEditor: () => void,
@@ -13,11 +14,22 @@ const TaskEditor:FC<ITaskEditor> = ({handleEditor, addTask}) => {
         handleEditor()
     }
 
+    const location = useLocation()
+
     function createNewTask(value: string) {
-        if (value) {
+        if (value && location.pathname === '/') {
             const newTask = {
                 id: Date.now(),
-                value
+                value,
+                category: 'inbox'
+            }
+            addTask(newTask)
+            setInputValue('')
+        } else if (value && location.pathname === '/today') {
+            const newTask = {
+                id: Date.now(),
+                value,
+                category: 'today'
             }
             addTask(newTask)
             setInputValue('')

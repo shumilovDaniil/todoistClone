@@ -8,7 +8,6 @@ export interface ITaskListProps {
 }
 
 const TaskList: FC <ITaskListProps> = ({tasks, removeTask } ) => {
-
     return (
         <div className={'mb-4'}>
             {tasks.map((task) => {

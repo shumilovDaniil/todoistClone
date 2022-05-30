@@ -3,21 +3,29 @@ import TaskList, {ITaskListProps} from "./TaskList";
 import TaskEditor from "./TaskEditor";
 import {AiOutlinePlusSquare} from "react-icons/ai";
 import {ITask} from "../types/types";
+import {useLocation, useParams} from "react-router-dom";
 
-interface IInboxProps extends ITaskListProps {
+interface ICategorySwitcherProps extends ITaskListProps {
     addTask: (newTask: ITask) => void
 }
 
-const Inbox: FC<IInboxProps> = ({tasks, removeTask, addTask}) => {
+const CategorySwitcher: FC<ICategorySwitcherProps> = ({tasks, removeTask, addTask}) => {
     const [disableTaskEditor, setDisableTaskEditor] = useState(false)
 
     function handleEditor() {
         setDisableTaskEditor(prev => !prev)
     }
 
+    const location = useLocation()
+
     return (
         <div>
-            <TaskList tasks={tasks} removeTask={removeTask}/>
+            {
+                (location.pathname === '/') ?
+                    <TaskList tasks={tasks.filter(task => task.category === 'inbox')} removeTask={removeTask}/>
+                    : <TaskList tasks={tasks.filter(task => task.category === 'today')} removeTask={removeTask}/>
+            }
+
             {
                 (disableTaskEditor)
                     ?
@@ -33,4 +41,4 @@ const Inbox: FC<IInboxProps> = ({tasks, removeTask, addTask}) => {
     );
 };
 
-export default Inbox;
+export default CategorySwitcher;

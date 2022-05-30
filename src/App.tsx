@@ -11,21 +11,25 @@ import {
     Link,
     Routes
 } from "react-router-dom";
-import Inbox from "./Components/Inbox";
+import CategorySwitcher from "./Components/CategorySwitcher";
+import Today from "./Components/Today";
 
 const App: FC = () => {
     const [tasks, setTasks] = useState([
         {
             id: 123123123,
-            value: 'text 1'
+            value: 'text 1',
+            category: 'inbox'
         },
         {
             id: 66563123123,
-            value: 'text 2'
+            value: 'text 2',
+            category: 'today'
         },
         {
             id: 442223123,
-            value: 'text 3'
+            value: 'text 3',
+            category: 'inbox'
         }
     ])
 
@@ -43,10 +47,14 @@ const App: FC = () => {
                 <Sidebar/>
                 <Routes>
                     <Route
-                        element={<Inbox tasks={tasks} removeTask={removeTask} addTask={addTask}/>}
-                        path="/">
+                        element={<CategorySwitcher tasks={tasks} removeTask={removeTask} addTask={addTask}/>}
+                        path="/"
+                    >
                     </Route>
-                    <Route path="/today" element={<h2>today</h2>}>
+                    <Route
+                        element={<CategorySwitcher tasks={tasks} removeTask={removeTask} addTask={addTask}/>}
+                        path="/today"
+                    >
                     </Route>
                 </Routes>
             </Router>
